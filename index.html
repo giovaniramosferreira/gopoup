@@ -239,6 +239,47 @@
 
     </main>
 
+    <script>
+        const slider = document.getElementById('familySize');
+        const display = document.getElementById('familySizeValue');
+
+        const baseValues = {
+            gourmet: 800,
+            medium: 500,
+            eco: 300
+        };
+
+        const poupDiscount = 0.30; // 30% savings
+
+        function updateValues() {
+            const size = parseInt(slider.value);
+            display.textContent = size;
+
+            // Update Gourmet
+            const gFull = baseValues.gourmet * size;
+            const gPoup = gFull * (1 - poupDiscount);
+            document.getElementById('gourmetFull').textContent = `R$ ${gFull.toLocaleString('pt-BR')}`;
+            document.getElementById('gourmetPoup').textContent = `R$ ${gPoup.toLocaleString('pt-BR')}`;
+            document.getElementById('gourmetSave').textContent = `R$ ${(gFull - gPoup).toLocaleString('pt-BR')}`;
+
+            // Update Medium
+            const mFull = baseValues.medium * size;
+            const mPoup = mFull * (1 - poupDiscount);
+            document.getElementById('mediumFull').textContent = `R$ ${mFull.toLocaleString('pt-BR')}`;
+            document.getElementById('mediumPoup').textContent = `R$ ${mPoup.toLocaleString('pt-BR')}`;
+            document.getElementById('mediumSave').textContent = `R$ ${(mFull - mPoup).toLocaleString('pt-BR')}`;
+
+            // Update Eco
+            const eFull = baseValues.eco * size;
+            const ePoup = eFull * (1 - poupDiscount);
+            document.getElementById('ecoFull').textContent = `R$ ${eFull.toLocaleString('pt-BR')}`;
+            document.getElementById('ecoPoup').textContent = `R$ ${ePoup.toLocaleString('pt-BR')}`;
+            document.getElementById('ecoSave').textContent = `R$ ${(eFull - ePoup).toLocaleString('pt-BR')}`;
+        }
+
+        slider.addEventListener('input', updateValues);
+        updateValues(); // Initial call
+    </script>
 </body>
 
 </html>
