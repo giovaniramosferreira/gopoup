@@ -7,287 +7,238 @@
     <title>PouP! — Economia Inteligente</title>
     <style>
         :root {
-            --bg-color: #0b0c10;
-            --text-primary: #ffffff;
-            --text-secondary: #8a8f98;
-            --accent-color: #5e6ad2;
-            --accent-glow: rgba(94, 106, 210, 0.5);
-            --button-bg: #5e6ad2;
-            --button-text: #ffffff;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --bg-black: #000000;
+            --nu-purple: #820ad1;
+            --nu-white: #ffffff;
+            --nu-text-secondary: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+            font-family: 'Graphik', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--nu-white);
+            overflow: hidden;
+            /* Handle scrolling in container */
         }
 
-        /* Subtle background glow effect */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(94, 106, 210, 0.15) 0%, rgba(11, 12, 16, 0) 70%);
-            z-index: -1;
-            pointer-events: none;
+        /* Snap Container */
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
 
-        .container {
+        /* Full Screen Section */
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            /* Padding from screen edges */
+        }
+
+        /* The Card */
+        .card {
+            background-color: var(--nu-purple);
+            border-radius: 32px;
+            width: 100%;
             max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        /* Header / Nav */
-        header {
+            height: 90vh;
+            /* Takes up most of the screen */
+            max-height: 800px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 80px;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(130, 10, 209, 0.15);
+            /* Subtle purple glow */
+            position: relative;
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
+        /* Image Area */
+        .card-image {
+            flex: 1;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Content Area */
+        .card-content {
+            flex: 0 0 auto;
+            padding: 40px;
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background: var(--nu-purple);
         }
 
-        .logo-icon {
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(135deg, #5e6ad2, #a259ff);
-            border-radius: 6px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            /* Large, bold typography */
+        /* Typography */
+        h1,
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+            line-height: 1.05;
             margin-bottom: 24px;
-            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
+        p {
             font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            font-weight: 400;
+            line-height: 1.5;
+            color: var(--nu-text-secondary);
+            margin-bottom: 32px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /* Buttons */
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 80px;
-        }
-
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
+            background-color: var(--nu-white);
+            color: var(--nu-purple);
+            font-size: 1.125rem;
+            font-weight: 700;
+            padding: 16px 36px;
             border-radius: 99px;
-            /* Pill shape */
-            font-size: 1rem;
-            font-weight: 500;
             text-decoration: none;
-            transition: all 0.2s ease;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .btn-primary {
-            background: #5e6ad2;
-            /* Linear-ish purple/blue */
-            color: #fff;
-            box-shadow: 0 0 20px rgba(94, 106, 210, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary:hover {
-            background: #6e7bf2;
-            transform: translateY(-1px);
-            box-shadow: 0 0 30px rgba(94, 106, 210, 0.5);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Feature Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            text-align: left;
-            margin-bottom: 80px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            padding: 32px;
-            border-radius: 12px;
-            transition: transform 0.2s;
-        }
-
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .feature-icon {
+        /* Branding */
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
             font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #a259ff;
+            font-weight: 800;
+            color: var(--nu-white);
+            z-index: 100;
+            mix-blend-mode: difference;
+            /* Ensures visibility on light/dark images */
+            pointer-events: none;
         }
 
-        .feature-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: var(--text-primary);
+        /* Scroll Indicator */
+        .indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .feature-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding-top: 40px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-links span {
-            margin-left: 20px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+        /* Desktop Layout (Side-by-Side) */
+        @media (min-width: 768px) {
+            .card {
+                flex-direction: row;
+                /* Image Left, Content Right */
+                height: 80vh;
+                /* Slightly smaller on desktop for floating effect */
             }
 
-            header {
-                flex-direction: column;
-                gap: 20px;
-                margin-bottom: 40px;
+            .card-image {
+                flex: 1.2;
+                height: 100%;
             }
 
-            .btn-group {
-                flex-direction: column;
-                width: 100%;
+            .card-content {
+                flex: 1;
+                height: 100%;
+                padding: 60px 60px;
+                justify-content: center;
             }
 
-            footer {
-                flex-direction: column;
-                gap: 20px;
+            /* Alternating Layout for visual interest */
+            section:nth-child(even) .card {
+                flex-direction: row-reverse;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <div class="logo-icon"></div>
-                PouP!
-            </div>
-            <div class="nav-links">
-                <!-- Placeholder links for aesthetic -->
-                <span>Visão Geral</span>
-                <span>Como Funciona</span>
-                <span>Depoimentos</span>
-            </div>
-        </header>
 
-        <section class="hero">
-            <h1>Economia inteligente<br>para sua rotina.</h1>
-            <p>O <strong>PouP!</strong> monitora os preços dos produtos que você já compra e avisa o momento exato de
-                comprar. Economize de 20% a 30% sem mudar seus hábitos.</p>
+    <div class="logo">PouP<span>!</span></div>
 
-            <div class="btn-group">
-                <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B" class="btn btn-primary">Entrar para o Grupo
-                    Beta &rarr;</a>
-                <a href="#" class="btn btn-secondary">Saber mais</a>
+    <main class="snap-container">
+
+        <!-- 1. Intro -->
+        <section>
+            <div class="card">
+                <div class="card-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80');">
+                </div>
+                <div class="card-content">
+                    <h1>Economia<br>Inteligente.</h1>
+                    <p>O primeiro monitor de preços que trabalha por você. Coloque dinheiro de volta no bolso sem mudar
+                        sua rotina.</p>
+                    <div class="indicator">Role para baixo ↓</div>
+                </div>
             </div>
         </section>
 
-        <section class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔔</div>
-                <h3>Zero Ruído</h3>
-                <p>Nada de spam. Você recebe apenas uma notificação por dia com as melhores oportunidades reais.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛒</div>
-                <h3>Essenciais</h3>
-                <p>Focamos no que importa: Higiene, Limpeza, Mantimentos e Pet. Itens que você compra todo mês.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">✈️</div>
-                <h3>Meta Real</h3>
-                <p>A economia acumulada no final do ano pode pagar sua viagem de férias. É dinheiro no bolso.</p>
+        <!-- 2. The Problem -->
+        <section>
+            <div class="card">
+                <div class="card-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1586769852044-692d6e3703f0?auto=format&fit=crop&w=1000&q=80');">
+                </div>
+                <div class="card-content">
+                    <h2>Chega de Barulho.</h2>
+                    <p>Nós não incentivamos o consumismo e atuamos na economia em itens essenciais que você compra todo
+                        mês.</p>
+                </div>
             </div>
         </section>
 
-        <footer>
-            <div>&copy; 2024 PouP! by Gigio.</div>
-            <div class="footer-links">
-                <span>Privacidade</span>
-                <span>Termos</span>
-                <span>Twitter</span>
+        <!-- 3. The Essentials -->
+        <section>
+            <div class="card">
+                <div class="card-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1000&q=80');">
+                </div>
+                <div class="card-content">
+                    <h2>Só o Essencial.</h2>
+                    <p>Higiene, Limpeza e Mercado. Monitoramos os itens que você <strong>já compra</strong> todo mês.
+                        Sem tralhas.</p>
+                </div>
             </div>
-        </footer>
-    </div>
+        </section>
+
+        <!-- 4. The Goal -->
+        <section>
+            <div class="card">
+                <div class="card-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');">
+                </div>
+                <div class="card-content">
+                    <h2>Viagem Garantida.</h2>
+                    <p>Economize de 20% a 30%. O dinheiro acumulado paga suas férias no final do ano.</p>
+                    <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B" class="btn">Entrar para o Grupo Beta</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
 </body>
 
 </html>
