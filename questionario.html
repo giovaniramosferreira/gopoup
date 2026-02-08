@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar PouP! — Inteligência no Consumo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #635bff;
+            --primary-light: #8da2fb;
+            --bg-dark: #0a0a0c;
+            --card-bg: #161618;
+            --text-main: #9499b3;
+            --text-heading: #ffffff;
+            --white: #ffffff;
+            --border: #2d2d30;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .onboarding-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            background: var(--bg-dark);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .onboarding-container {
+                max-height: 850px;
+                border-radius: 32px;
+                border: 1px solid var(--border);
+                box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border);
+            margin: 0 20px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Steps Wrapper --- */
+        .steps-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .step.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateX(0);
+        }
+
+        .step.next {
+            transform: translateX(100%);
+        }
+
+        .step.prev {
+            transform: translateX(-100%);
+        }
+
+        h2 {
+            color: var(--text-heading);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        p.description {
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* --- Selection UI --- */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .selection-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            user-select: none;
+        }
+
+        .selection-item:hover {
+            border-color: var(--primary);
+            background: rgba(99, 91, 255, 0.05);
+        }
+
+        .selection-item.selected {
+            border-color: var(--primary);
+            background: rgba(99, 91, 255, 0.1);
+        }
+
+        .selection-item .icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .selection-item.selected .icon {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .selection-item .label {
+            font-weight: 600;
+            color: var(--text-heading);
+            flex: 1;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .selection-item.selected .checkbox-custom {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .selection-item.selected .checkbox-custom::after {
+            content: "✓";
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+        }
+
+        /* --- Family Size Counter --- */
+        .counter-group {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .counter-label {
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .counter-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .counter-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* --- Brands Input --- */
+        .input-text {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 24px;
+        }
+
+        .input-text:focus {
+            border-color: var(--primary);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-group.active .toggle-switch {
+            background: var(--primary);
+        }
+
+        .toggle-group.active .toggle-switch::after {
+            transform: translateX(20px);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            margin-top: auto;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* --- Scrollable Area for items --- */
+        .scrollable-items {
+            max-height: 100%;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="onboarding-container">
+        <div class="header">
+            <a href="index.html" class="logo">PouP!</a>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 20%;"></div>
+            </div>
+        </div>
+
+        <div class="steps-wrapper">
+            <!-- Step 1: Environments -->
+            <div class="step active" id="step1">
+                <h2>Onde você<br>quer economizar?</h2>
+                <p class="description">Selecione os ambientes que você gostaria de monitorar.</p>
+                <div class="selection-grid">
+                    <div class="selection-item" data-id="cozinha">
+                        <div class="icon">🍳</div>
+                        <div class="label">Cozinha</div>
+                        <div class="checkbox-custom"></div>
+                    </div>
+                    <div class="selection-item" data-id="lavanderia">
+                        <div class="icon">🧺</div>
+                        <div class="label">Lavanderia</div>
+                        <div class="checkbox-custom"></div>
+                    </div>
+                    <div class="selection-item" data-id="banheiros">
+                        <div class="icon">🚿</div>
+                        <div class="label">Banheiros</div>
+                        <div class="checkbox-custom"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Items (Dynamic) -->
+            <div class="step next" id="step2">
+                <h2>Quais itens<br>você consome?</h2>
+                <p class="description">Marque os produtos recorrentes da sua lista.</p>
+                <div class="scrollable-items selection-grid" id="itemsList">
+                    <!-- Dynamic Items Here -->
+                </div>
+            </div>
+
+            <!-- Step 3: Family Size -->
+            <div class="step next" id="step3">
+                <h2>Como é a<br>sua família?</h2>
+                <p class="description">Isso ajuda a calcularmos a duração dos seus produtos.</p>
+                <div class="counter-group">
+                    <div class="counter-label">Pessoas</div>
+                    <div class="counter-controls">
+                        <button class="counter-btn" onclick="updateCounter('people', -1)">-</button>
+                        <span class="counter-value" id="countPeople">2</span>
+                        <button class="counter-btn" onclick="updateCounter('people', 1)">+</button>
+                    </div>
+                </div>
+                <div class="counter-group">
+                    <div class="counter-label">Gatos</div>
+                    <div class="counter-controls">
+                        <button class="counter-btn" onclick="updateCounter('cats', -1)">-</button>
+                        <span class="counter-value" id="countCats">0</span>
+                        <button class="counter-btn" onclick="updateCounter('cats', 1)">+</button>
+                    </div>
+                </div>
+                <div class="counter-group">
+                    <div class="counter-label">Cachorros</div>
+                    <div class="counter-controls">
+                        <button class="counter-btn" onclick="updateCounter('dogs', -1)">-</button>
+                        <span class="counter-value" id="countDogs">0</span>
+                        <button class="counter-btn" onclick="updateCounter('dogs', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Brands -->
+            <div class="step next" id="step4">
+                <h2>Marcas de<br>preferência?</h2>
+                <p class="description">Quais marcas não podem faltar na sua casa?</p>
+                <input type="text" class="input-text" id="preferredBrands" placeholder="OMO, Dove, Nestlé...">
+                <div class="toggle-group" id="suggestionsToggle" onclick="this.classList.toggle('active')">
+                    <div class="label" style="color: var(--text-heading); font-weight: 600;">Aceita sugestões da IA?
+                    </div>
+                    <div class="toggle-switch"></div>
+                </div>
+                <p style="margin-top: 12px; font-size: 14px;">Recomendamos marcas similares caso o preço esteja muito
+                    melhor.</p>
+            </div>
+
+            <!-- Step 5: Requests -->
+            <div class="step next" id="step5">
+                <h2>Alguma solicitação<br>específica?</h2>
+                <p class="description">Algo que não listamos? Exemplos: "Sempre sem glúten", "Só marcas orgânicas".</p>
+                <textarea class="input-text" id="customRequests" style="height: 150px; resize: none;"
+                    placeholder="Escreva aqui..."></textarea>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-ghost" id="btnPrev" style="display: none;">Voltar</button>
+            <button class="btn btn-primary" id="btnNext">Continuar</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        const userData = {
+            environments: [],
+            items: [],
+            family: { people: 2, cats: 0, dogs: 0 },
+            brands: '',
+            acceptSuggestions: false,
+            requests: ''
+        };
+
+        const itemDatabase = {
+            cozinha: ['Arroz', 'Feijão', 'Macarrão', 'Maionese', 'Café', 'Azeite', 'Açúcar', 'Sal', 'Óleo', 'Molho de Tomate', 'Leite', 'Biscoito'],
+            lavanderia: ['Sabão em Pó', 'Sabão Líquido', 'Amaciante', 'Alvejante', 'Desinfetante', 'Detergente', 'Esponja'],
+            banheiros: ['Papel Higiênico', 'Shampoo', 'Condicionador', 'Sabonete', 'Pasta de Dente', 'Desodorante', 'Fio Dental']
+        };
+
+        const steps = document.querySelectorAll('.step');
+        const progressFill = document.getElementById('progressFill');
+        const btnNext = document.getElementById('btnNext');
+        const btnPrev = document.getElementById('btnPrev');
+
+        // Selection Interaction
+        document.addEventListener('click', (e) => {
+            const item = e.target.closest('.selection-item');
+            if (item) {
+                item.classList.toggle('selected');
+                updateSelectedData();
+            }
+        });
+
+        function updateSelectedData() {
+            if (currentStep === 1) {
+                userData.environments = Array.from(document.querySelectorAll('#step1 .selected'))
+                    .map(el => el.dataset.id);
+            } else if (currentStep === 2) {
+                userData.items = Array.from(document.querySelectorAll('#step2 .selected'))
+                    .map(el => el.querySelector('.label').textContent);
+            }
+        }
+
+        function updateCounter(type, delta) {
+            userData.family[type] = Math.max(0, userData.family[type] + delta);
+            document.getElementById(`count${type.charAt(0).toUpperCase() + type.slice(1)}`).textContent = userData.family[type];
+        }
+
+        function renderItems() {
+            const list = document.getElementById('itemsList');
+            list.innerHTML = '';
+            userData.environments.forEach(env => {
+                const title = document.createElement('div');
+                title.style.cssText = 'grid-column: 1/-1; color: var(--primary); font-weight: 700; margin-top: 10px; text-transform: uppercase; font-size: 14px;';
+                title.textContent = env;
+                list.appendChild(title);
+
+                itemDatabase[env].forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'selection-item';
+                    if (userData.items.includes(item)) el.classList.add('selected');
+                    el.innerHTML = `
+                        <div class="label">${item}</div>
+                        <div class="checkbox-custom"></div>
+                    `;
+                    list.appendChild(el);
+                });
+            });
+        }
+
+        function navigate(direction) {
+            const currentEl = document.getElementById(`step${currentStep}`);
+
+            if (direction === 1) {
+                if (currentStep === 1 && userData.environments.length === 0) return alert('Selecione pelo menos um ambiente.');
+                if (currentStep === 2) renderItems(); // Re-render if changing environments
+
+                if (currentStep === totalSteps) {
+                    submitData();
+                    return;
+                }
+
+                currentEl.classList.remove('active');
+                currentEl.classList.add('prev');
+                currentStep++;
+            } else {
+                currentEl.classList.remove('active');
+                currentEl.classList.add('next');
+                currentStep--;
+            }
+
+            const nextEl = document.getElementById(`step${currentStep}`);
+            nextEl.classList.remove('prev', 'next');
+            nextEl.classList.add('active');
+
+            // Update UI
+            progressFill.style.width = `${(currentStep / totalSteps) * 100}%`;
+            btnPrev.style.display = currentStep === 1 ? 'none' : 'flex';
+            btnNext.textContent = currentStep === totalSteps ? 'Finalizar' : 'Continuar';
+
+            if (currentStep === 2) renderItems();
+        }
+
+        function submitData() {
+            userData.brands = document.getElementById('preferredBrands').value;
+            userData.acceptSuggestions = document.getElementById('suggestionsToggle').classList.contains('active');
+            userData.requests = document.getElementById('customRequests').value;
+
+            console.log('Final Data:', userData);
+            alert('Configuração concluída! Seus dados foram salvos.');
+            window.location.href = 'index.html';
+        }
+
+        btnNext.addEventListener('click', () => navigate(1));
+        btnPrev.addEventListener('click', () => navigate(-1));
+
+    </script>
+</body>
+
+</html>
