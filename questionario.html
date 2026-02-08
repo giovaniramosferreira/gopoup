@@ -381,7 +381,7 @@
         <div class="header">
             <a href="index.html" class="logo">PouP!</a>
             <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 20%;"></div>
+                <div class="progress-fill" id="progressFill" style="width: 16.6%;"></div>
             </div>
         </div>
 
@@ -469,6 +469,25 @@
                 <textarea class="input-text" id="customRequests" style="height: 150px; resize: none;"
                     placeholder="Escreva aqui..."></textarea>
             </div>
+
+            <!-- Step 6: Contact & Terms -->
+            <div class="step next" id="step6">
+                <h2>Para finalizar,<br>seu contato.</h2>
+                <p class="description">Onde devemos enviar seus alertas personalizados?</p>
+                <label
+                    style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-heading);">WhatsApp</label>
+                <input type="tel" class="input-text" id="userWhatsApp" placeholder="(11) 99999-9999" maxlength="15">
+
+                <label class="toggle-group" id="termsToggle"
+                    style="margin-top: 20px; align-items: flex-start; gap: 12px; cursor: pointer;"
+                    onclick="this.classList.toggle('active')">
+                    <div class="toggle-switch" style="flex-shrink: 0; margin-top: 4px;"></div>
+                    <div class="label" style="font-size: 14px; line-height: 1.4;">
+                        Aceito os <strong>Termos de Uso</strong> e a <strong>Política de Privacidade</strong> da PouP!.
+                        Entendo que meus dados serão usados para personalizar minhas recomendações.
+                    </div>
+                </label>
+            </div>
         </div>
 
         <div class="footer">
@@ -479,14 +498,16 @@
 
     <script>
         let currentStep = 1;
-        const totalSteps = 5;
+        const totalSteps = 6;
         const userData = {
             environments: [],
             items: [],
             family: { people: 2, cats: 0, dogs: 0 },
             brands: '',
             acceptSuggestions: false,
-            requests: ''
+            requests: '',
+            whatsapp: '',
+            acceptedTerms: false
         };
 
         const itemDatabase = {
@@ -507,6 +528,24 @@
                 item.classList.toggle('selected');
                 updateSelectedData();
             }
+        });
+
+        // WhatsApp Mask
+        const whatsappInput = document.getElementById('userWhatsApp');
+        whatsappInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 10) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+            } else if (value.length > 6) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
+            } else if (value.length > 2) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+            e.target.value = value;
         });
 
         function updateSelectedData() {
@@ -550,10 +589,17 @@
             const currentEl = document.getElementById(`step${currentStep}`);
 
             if (direction === 1) {
+                // Validações
                 if (currentStep === 1 && userData.environments.length === 0) return alert('Selecione pelo menos um ambiente.');
-                if (currentStep === 2) renderItems(); // Re-render if changing environments
+                if (currentStep === 2 && userData.items.length === 0) return alert('Selecione pelo menos um item para monitorar.');
+                if (currentStep === 6) {
+                    const wp = document.getElementById('userWhatsApp').value;
+                    const terms = document.getElementById('termsToggle').classList.contains('active');
+                    if (wp.length < 14) return alert('Por favor, informe seu WhatsApp completo.');
+                    if (!terms) return alert('Você precisa aceitar os termos de uso.');
 
-                if (currentStep === totalSteps) {
+                    userData.whatsapp = wp;
+                    userData.acceptedTerms = terms;
                     submitData();
                     return;
                 }
@@ -585,7 +631,7 @@
             userData.requests = document.getElementById('customRequests').value;
 
             console.log('Final Data:', userData);
-            alert('Configuração concluída! Seus dados foram salvos.');
+            alert('Cadastro concluído com sucesso! Bem-vindo à PouP!.');
             window.location.href = 'index.html';
         }
 
