@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações — PouP!</title>
+    <style>
+        :root {
+            --bg-black: #000000;
+            --nu-purple: #820ad1;
+            --nu-white: #ffffff;
+            --nu-text-secondary: rgba(255, 255, 255, 0.7);
+            --danger: #ff4757;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--nu-white);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding-top: 40px;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--nu-white);
+        }
+
+        .btn-back {
+            color: var(--nu-text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--nu-text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--nu-white);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--nu-text-secondary);
+        }
+
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #262626;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--nu-purple);
+        }
+
+        /* Pill Selection */
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            padding: 10px 20px;
+            background: #262626;
+            border: 1px solid #333;
+            border-radius: 99px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .pill.active {
+            background: var(--nu-purple);
+            border-color: var(--nu-purple);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--nu-purple);
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 18px;
+            background: var(--nu-purple);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn-save:active {
+            transform: scale(0.98);
+        }
+
+        .btn-delete {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 40px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .btn-delete:hover {
+            opacity: 1;
+        }
+
+        .brand-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #262626;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">PouP!</a>
+            <a href="index.html" class="btn-back">← Voltar</a>
+        </header>
+
+        <h1>Configure seu Perfil</h1>
+        <p class="subtitle">Escolha o que e quando você quer receber.</p>
+
+        <form id="configForm">
+            <!-- Identify -->
+            <div class="section">
+                <div class="section-title">Identificação</div>
+                <div class="form-group">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="whatsapp" placeholder="(11) 99999-9999" required>
+                </div>
+            </div>
+
+            <!-- Notification Time -->
+            <div class="section">
+                <div class="section-title">Horário das Ofertas</div>
+                <div class="form-group">
+                    <label>Quando quer ser avisado?</label>
+                    <select id="schedule">
+                        <option value="morning">Manhã (09:00)</option>
+                        <option value="afternoon">Tarde (14:00)</option>
+                        <option value="evening">Noite (19:00)</option>
+                        <option value="propitious" selected>Horário mais propício (Inteligente)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="geekNews">
+                        Receber novidades do desenvolvimento (For Geeks)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Product Preferences -->
+            <div class="section">
+                <div class="section-title">O que monitorar?</div>
+                <label>Categorias de interesse</label>
+                <div class="pill-group" id="categorySelection">
+                    <div class="pill" data-value="limpeza">Limpeza</div>
+                    <div class="pill" data-value="higiene">Higiene</div>
+                    <div class="pill" data-value="alimentos">Alimentos</div>
+                    <div class="pill" data-value="pet">Pet</div>
+                    <div class="pill" data-value="bebidas">Bebidas</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <label>Marcas preferidas (Opcional)</label>
+                    <input type="text" id="brandInput" class="brand-input" placeholder="Ex: Omo, Dove, Heineken...">
+                    <div style="font-size: 0.8rem; color: var(--nu-text-secondary);">Separe as marcas por vírgula.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-save">Salvar Configurações</button>
+        </form>
+
+        <button type="button" id="deleteAccount" class="btn-delete">Excluir todos os meus dados imediatamente</button>
+    </div>
+
+    <script>
+        // Pill interaction
+        const pills = document.querySelectorAll('.pill');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pill.classList.toggle('active');
+            });
+        });
+
+        // Form Submission
+        document.getElementById('configForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const activePills = Array.from(document.querySelectorAll('.pill.active')).map(p => p.dataset.value);
+
+            const data = {
+                whatsapp: document.getElementById('whatsapp').value,
+                schedule: document.getElementById('schedule').value,
+                geekNews: document.getElementById('geekNews').checked,
+                categories: activePills,
+                brands: document.getElementById('brandInput').value.split(',').map(b => b.trim()).filter(b => b)
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Configurações salvas com sucesso!');
+                } else {
+                    alert('Erro ao salvar: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erro de conexão com o servidor local.');
+            }
+        });
+
+        // Delete Account
+        document.getElementById('deleteAccount').addEventListener('click', async () => {
+            const whatsapp = document.getElementById('whatsapp').value;
+            if (!whatsapp) {
+                alert('Por favor, informe seu WhatsApp para confirmar a exclusão.');
+                return;
+            }
+
+            if (confirm('Tem certeza que deseja excluir todos os seus dados? Esta ação é irreversível.')) {
+                try {
+                    const response = await fetch('http://localhost:3000/api/unsubscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ whatsapp })
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert('Dados excluídos com sucesso!');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('Erro ao excluir: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Erro de conexão com o servidor local.');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
