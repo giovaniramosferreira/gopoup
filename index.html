@@ -271,7 +271,82 @@
             color: var(--primary);
         }
 
-        /* --- Responsive --- */
+        /* --- Example Section (Savings) --- */
+        .example-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            border-bottom: 1px solid #f0f4f8;
+        }
+
+        .example-card {
+            background: var(--bg-light);
+            border-radius: 24px;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .example-text {
+            flex: 1;
+        }
+
+        .example-text h2 {
+            font-size: 32px;
+            color: var(--text-heading);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .example-text p {
+            font-size: 18px;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .example-stats {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            min-width: 320px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .example-illustration {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 960px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -297,6 +372,17 @@
                 height: 300px;
             }
 
+            .example-card {
+                flex-direction: column;
+                padding: 40px;
+                text-align: center;
+            }
+
+            .example-stats {
+                width: 100%;
+                min-width: auto;
+            }
+
             .bento-grid {
                 grid-template-columns: 1fr;
             }
@@ -305,52 +391,6 @@
             .col-8,
             .col-6 {
                 grid-column: span 12;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-section {
-                padding: 120px 0 60px;
-                min-height: auto;
-            }
-
-            h1 {
-                font-size: 36px;
-                letter-spacing: -1.5px;
-            }
-
-            .btn-main {
-                width: 100%;
-            }
-
-            .cta-group {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            header {
-                height: 70px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .btn-header {
-                padding: 6px 14px;
-                font-size: 13px;
-            }
-
-            .features {
-                padding: 60px 0;
-            }
-
-            .bento-item {
-                padding: 24px;
             }
         }
     </style>
@@ -370,8 +410,8 @@
             <div class="hero-bg"></div>
             <div class="container hero-content">
                 <div class="hero">
-                    <h1 id="hero-title">O consumo, <br>agora inteligente.</h1>
-                    <p>PouP! elimina o esforço da busca. Um agente de IA que mapeia, compara e otimiza suas compras
+                    <h1 id="hero-title">O consumo do dia-dia, <br>Só que inteligente.</h1>
+                    <p>A PouP! faz tudo pra você. Mapeamos, comparamos e otimizamos suas compras
                         essenciais em tempo real.</p>
                     <div class="cta-group">
                         <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B" class="btn-main">Iniciar
@@ -398,6 +438,34 @@
             </div>
         </section>
 
+        <section class="example-section">
+            <div class="container">
+                <div class="example-card">
+                    <div class="example-text">
+                        <div class="example-illustration">👨‍👩‍👦 🐈🐈</div>
+                        <h2>Sabia que uma família de 3 pessoas e 2 gatos gasta cerca de R$ 3.500/mês com o básico?</h2>
+                        <p>Itens recorrentes como papel higiênico, desodorante, shampoo e produtos de limpeza pesam no
+                            orçamento sem você perceber.</p>
+                        <p><strong>A PouP! coloca esse dinheiro de volta no seu bolso.</strong></p>
+                        <p>Nossa plataforma recomenda diariamente se é hora de comprar ou esperar. Comprando de forma
+                            programada, garantimos a melhor oferta baseada em nossos algoritmos, economizando até 30% e
+                            te avisando exatamente quando reabastecer a despensa.</p>
+                    </div>
+                    <div class="example-stats">
+                        <span class="stat-desc">Economia Potencial</span>
+                        <span class="stat-value">R$ 1.050</span>
+                        <p style="font-size: 15px; color: var(--text-main);">Dinheiro livre todos os meses para o que
+                            realmente importa.</p>
+                        <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid #eef2f7;">
+                            <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B"
+                                style="color: var(--primary); font-weight: 700; text-decoration: none;">Começar a
+                                poupar &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="features">
             <div class="container">
                 <span class="section-label">Plataforma Poup!</span>
@@ -413,8 +481,8 @@
                             </svg>
                         </div>
                         <h3>Monitoramento em tempo real</h3>
-                        <p>Nossa rede de agentes processa milhões de variações de preços por segundo nas maiores
-                            varejistas da América Latina.</p>
+                        <p>Nós estamos conectados com os maiores varejistas do Brasil, monitorando preços em tempo real.
+                        </p>
                     </div>
                     <div class="bento-item col-6 card">
                         <div class="feature-icon">
@@ -424,8 +492,8 @@
                             </svg>
                         </div>
                         <h3>Algoritmo Anti-Fraude</h3>
-                        <p>Filtramos falsas promoções utilizando análise histórica de 12 meses. Se o "desconto" é
-                            inflado, você nem recebe a notificação.</p>
+                        <p>Alem de só confiarmos em Parceiros renomados, temos um algoritmo que confere se a promoção é
+                            real, e se não for, nós memos vamos denunciar e ajudar a limpar o mercado.</p>
                     </div>
                     <div class="bento-item col-4 card">
                         <div class="feature-icon">
@@ -436,9 +504,9 @@
                                 </path>
                             </svg>
                         </div>
-                        <h3>Logística de Cesta</h3>
-                        <p>Agrupamos produtos essenciais para otimizar o frete. O agente calcula a combinação matemática
-                            mais barata de entrega.</p>
+                        <h3>Pacotes 100% Customizaveis.</h3>
+                        <p>Você parte de um modelo de compras, e pode customizar como quiser, tudo em menos de 1 minuto.
+                        </p>
                     </div>
                     <div class="bento-item col-8 card">
                         <div class="feature-icon">
@@ -449,8 +517,9 @@
                             </svg>
                         </div>
                         <h3>Segurança de Dados</h3>
-                        <p>Utilizamos criptografia ponta a ponta para seus perfis de consumo. Seus dados nunca são
-                            vendidos; eles servem apenas para economizar seu dinheiro.</p>
+                        <p>Nosso modelo de negócios não depende da venda de dados para anunciantes. A PouP! precisa só
+                            do seu Contato. Você sempre estará no controle de quais dados possuimos, como preferencia
+                            por marcas, categorias de produtos e etc.</p>
                     </div>
                 </div>
             </div>
