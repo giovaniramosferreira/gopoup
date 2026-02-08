@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PouP! — O consumo, agora inteligente.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #635bff;
+            --primary-hover: #0a2540;
+            --text-main: #424770;
+            --text-heading: #0a2540;
+            --bg-light: #f6f9fc;
+            --white: #ffffff;
+            --indigo: #32325d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Header --- */
+        header {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            z-index: 10;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .btn-header {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-header:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* --- Hero Section & Mesh Gradient --- */
+        .hero-section {
+            position: relative;
+            padding: 160px 0 100px;
+            min-height: 850px;
+            background-color: var(--white);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: #5551FF;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            transform: skewY(-6deg);
+            transform-origin: top left;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--white);
+            font-size: clamp(40px, 6vw, 68px);
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            color: #adbdcc;
+            font-size: clamp(16px, 2vw, 20px);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-main {
+            background-color: var(--white);
+            color: #5551FF;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+        }
+
+        .btn-secondary {
+            color: var(--white);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* Perspective Image Placeholder */
+        .hero-visual {
+            position: relative;
+            perspective: 1200px;
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 0 30px 60px -30px rgba(0, 0, 0, 0.3);
+            transform: rotateY(-25deg) rotateX(15deg) rotateZ(5deg);
+            width: 100%;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .db-line {
+            height: 12px;
+            border-radius: 4px;
+            background: #f6f9fc;
+        }
+
+        .db-line.short {
+            width: 40%;
+        }
+
+        .db-line.long {
+            width: 85%;
+        }
+
+        .db-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #635bff;
+        }
+
+        /* --- Features Section (Bento Grid) --- */
+        .features {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-label {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-top: 50px;
+        }
+
+        .bento-item {
+            padding: 32px;
+            border-radius: 16px;
+            background: var(--white);
+            transition: transform 0.2s;
+            position: relative;
+            border: 1px solid #eef2f7;
+        }
+
+        .bento-item h3 {
+            color: var(--text-heading);
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .bento-item p {
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .bento-item.card {
+            border-left: 4px solid var(--primary);
+        }
+
+        .col-4 {
+            grid-column: span 4;
+        }
+
+        .col-8 {
+            grid-column: span 8;
+        }
+
+        .col-6 {
+            grid-column: span 6;
+        }
+
+        .feature-icon {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 960px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 60px;
+            }
+
+            .hero p {
+                margin: 0 auto 40px;
+            }
+
+            .cta-group {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .dashboard-card {
+                transform: rotateY(0deg) rotateX(10deg);
+                height: 300px;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .col-4,
+            .col-8,
+            .col-6 {
+                grid-column: span 12;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 120px 0 60px;
+                min-height: auto;
+            }
+
+            h1 {
+                font-size: 36px;
+                letter-spacing: -1.5px;
+            }
+
+            .btn-main {
+                width: 100%;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            header {
+                height: 70px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .btn-header {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+
+            .features {
+                padding: 60px 0;
+            }
+
+            .bento-item {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav">
+            <a href="#" class="logo">PouP!</a>
+            <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B" class="btn-header">Acesso Beta</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-bg"></div>
+            <div class="container hero-content">
+                <div class="hero">
+                    <h1 id="hero-title">O consumo, <br>agora inteligente.</h1>
+                    <p>PouP! elimina o esforço da busca. Um agente de IA que mapeia, compara e otimiza suas compras
+                        essenciais em tempo real.</p>
+                    <div class="cta-group">
+                        <a href="https://chat.whatsapp.com/HEpiNvmdvLpChlVedhgO4B" class="btn-main">Iniciar
+                            Otimização</a>
+                        <a href="#" class="btn-secondary">Como funciona &rarr;</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="dashboard-card">
+                        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                            <div class="db-circle"></div>
+                            <div style="flex:1">
+                                <div class="db-line short" style="background:#e3e8ee; margin-bottom:8px"></div>
+                                <div class="db-line long" style="background:#f6f9fc"></div>
+                            </div>
+                        </div>
+                        <div class="db-line long"
+                            style="height: 100px; background: linear-gradient(90deg, #f6f9fc 0%, #e3e8ee 100%)"></div>
+                        <div class="db-line long"></div>
+                        <div class="db-line long"></div>
+                        <div class="db-line" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <span class="section-label">Plataforma Poup!</span>
+                <h2 style="font-size: 32px; color: var(--text-heading); font-weight: 800; margin-bottom: 40px;">
+                    Infraestrutura para economia inteligente</h2>
+
+                <div class="bento-grid">
+                    <div class="bento-item col-6 card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Monitoramento em tempo real</h3>
+                        <p>Nossa rede de agentes processa milhões de variações de preços por segundo nas maiores
+                            varejistas da América Latina.</p>
+                    </div>
+                    <div class="bento-item col-6 card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3>Algoritmo Anti-Fraude</h3>
+                        <p>Filtramos falsas promoções utilizando análise histórica de 12 meses. Se o "desconto" é
+                            inflado, você nem recebe a notificação.</p>
+                    </div>
+                    <div class="bento-item col-4 card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3>Logística de Cesta</h3>
+                        <p>Agrupamos produtos essenciais para otimizar o frete. O agente calcula a combinação matemática
+                            mais barata de entrega.</p>
+                    </div>
+                    <div class="bento-item col-8 card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <h3>Segurança de Dados</h3>
+                        <p>Utilizamos criptografia ponta a ponta para seus perfis de consumo. Seus dados nunca são
+                            vendidos; eles servem apenas para economizar seu dinheiro.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 100px 0 50px; background: #f6f9fc;">
+        <div class="container"
+            style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+            <div>
+                <span
+                    style="font-weight: 800; font-size: 20px; color: var(--text-heading); margin-bottom: 20px; display: block;">PouP!</span>
+                <p style="font-size: 14px; max-width: 250px;">Otimizando o consumo global através de agentes
+                    inteligentes.</p>
+            </div>
+            <div style="font-size: 13px; color: #707070;">
+                &copy; 2026 PouP! Inc. Desenvolvido para a economia do futuro.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth title fade-in
+        window.addEventListener('load', () => {
+            const title = document.getElementById('hero-title');
+            title.style.opacity = '0';
+            title.style.transform = 'translateY(20px)';
+            title.style.transition = 'all 0.8s ease-out';
+
+            setTimeout(() => {
+                title.style.opacity = '1';
+                title.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
